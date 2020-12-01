@@ -5,9 +5,11 @@ fn main() {
 
     for x in &input {
         for y in &input {
-            if x + y == 2020 {
-                println!("{} + {} = 2020", x, y);
-                println!("{} x {} = {}", x, y, x * y);
+            for z in &input {
+                if x + y + z == 2020 {
+                    println!("{} + {} + {} = 2020", x, y, z);
+                    println!("{} x {} x {} = {}", x, y, z, x * y * z);
+                }
             }
         }
     }
