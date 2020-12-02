@@ -1,16 +1,16 @@
 use scan_fmt::scan_fmt;
 
-const INPUT: &str = include_str!("input");
-
-fn count_matches() -> usize {
-    INPUT.lines()
+fn count_matches(input: &str) -> usize {
+    input.lines()
         .filter(|l| {
-            let (min, max, char, pw) = scan_fmt!(l, "{}-{} {}: {}", usize, usize, char, String).unwrap();
-            (min..=max).contains(&pw.chars().filter(|c| c == &char).count())
+            let (first, second, char, pw) = scan_fmt!(l, "{}-{} {}: {}", usize, usize, char, String).unwrap();
+            let pw = pw.as_bytes();
+            let char = char as u8;
+            (pw[first - 1] == char) ^ (pw[second - 1] == char)
         })
         .count()
 }
 
 fn main() {
-    println!("{}", count_matches());
+    println!("{}", count_matches(include_str!("input")));
 }
