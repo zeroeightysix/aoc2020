@@ -8,9 +8,9 @@ fn main() -> Result<(), NoneError>{
     const INPUT: &str = include_str!("input");
 
     let seats: HashSet<i32> = INPUT.lines().map(|seat_code| {
-        let mut row = (0..128);
+        let mut row = 0..128;
         close_in(&mut row, 'F', 'B', &seat_code[0..7]);
-        let mut seat = (0..8);
+        let mut seat = 0..8;
         close_in(&mut seat, 'L', 'R', &seat_code[7..10]);
         let row = row.start;
         let seat = seat.start;
