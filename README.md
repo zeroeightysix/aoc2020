@@ -1,3 +1,7 @@
-# There's nothing in the master branch.
+# AOC 2020 solutions in rust
 
-Look at [branches](https://github.com/zeroeightysix/aoc2020/branches) for solutions. Some may contain solutions for both puzzles of the day, but sometimes you may have to look at the commits to see the solution for the first puzzle.
+Use
+```
+cargo run --bin dayX
+```
+to run the solution for day X. For example, day 5 would be `cargo run --bin day5`.
