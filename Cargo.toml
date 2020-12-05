@@ -11,3 +11,4 @@ name = "day1"
 path = "src/day1/main.rs"
 
 [dependencies]
+scan_fmt = "0.2.5"
