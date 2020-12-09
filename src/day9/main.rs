@@ -1,46 +1,41 @@
-#![feature(iter_advance_by)]
 #![feature(label_break_value)]
 
-use std::collections::VecDeque;
 use std::process::exit;
+use slice_deque::SliceDeque;
 
 const PREAMBLE_LEN: usize = 25;
 
 fn main() {
-    const INPUT: &str = include_str!("input");
-
-    let mut preamble: VecDeque<usize> = INPUT.lines().take(PREAMBLE_LEN).map(|c| {
-        c.parse::<usize>().unwrap()
-    }).collect();
-
-    let mut input = INPUT.lines();
-    let _ = input.advance_by(PREAMBLE_LEN);
+    let input: Vec<usize> = include_str!("input").lines().map(|c| c.parse::<usize>().unwrap()).collect();
 
     let invalid = 'inv: {
+        let mut preamble: SliceDeque<usize> = SliceDeque::from(&input[0..=PREAMBLE_LEN]);
+        let input = &input[PREAMBLE_LEN + 1..];
+
         for x in input {
-            let number: usize = x.parse().unwrap();
-            if is_valid(number, &preamble) {
+            let x = *x;
+            if is_valid(x, &preamble) {
                 let _ = preamble.pop_front();
-                preamble.push_back(number);
+                preamble.push_back(x);
             } else {
-                break 'inv Some(number);
+                break 'inv x;
             }
         }
 
-        None
-    }.unwrap();
+        unreachable!();
+    };
 
-    let v: Vec<usize> = INPUT.lines().map(|c| c.parse::<usize>().unwrap()).collect();
-    let len = v.len();
-    (0..len - 1).for_each(|start_index| {
+    let len = input.len();
+    let mut start_index = 0;
+    loop {
         let mut index = start_index;
         let mut acc = 0;
         loop {
-            acc += &v[index];
+            acc += &input[index];
             if acc > invalid || index == len - 1 {
                 break;
             } else if acc == invalid {
-                let sub = &v[start_index..=index];
+                let sub = &input[start_index..=index];
                 let min = sub.iter().min().unwrap();
                 let max = sub.iter().max().unwrap();
                 println!("Found weakness: {} to {}; min {} + max {} = {}", start_index, index, min, max, min + max);
@@ -48,11 +43,13 @@ fn main() {
             }
             index += 1;
         }
-    })
+
+        start_index += 1;
+    }
 }
 
 #[inline]
-fn is_valid(number: usize, preamble: &VecDeque<usize>) -> bool {
+fn is_valid(number: usize, preamble: &SliceDeque<usize>) -> bool {
     for x in preamble {
         for y in preamble {
             if x == y {

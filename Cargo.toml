@@ -44,3 +44,4 @@ path = "src/day9/main.rs"
 
 [dependencies]
 scan_fmt = "0.2.5"
+slice-deque = "0.3.0"
