@@ -46,6 +46,10 @@ path = "src/day9/main.rs"
 name = "day10"
 path = "src/day10/main.rs"
 
+[[bin]]
+name = "day11"
+path = "src/day11/main.rs"
+
 [dependencies]
 scan_fmt = "0.2.5"
 slice-deque = "0.3.0"
